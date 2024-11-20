@@ -23,7 +23,7 @@ const getCakeId = async () => {
     `)
         .eq('id', cakeId).single()
     if (data) {
-        if (data.foto_kue) data.foto_kuePath = data.foto_kue.substr(data.foto_kue.indexOf(data.kategori.nama.toLowerCase())) 
+        if (data.foto_kue) data.foto_kuePath = data.foto_kue.substr(data.foto_kue.indexOf(data.kategori.nama.replace(' ', '-').toLowerCase())) 
         cake.value = data
     }
 }
