@@ -37,6 +37,7 @@ const fetchProducts = async (categoryId) => {
   if (data) {
     cakes.value = data
   }
+
 }
 
 const checkStock = (cake, e) => {
@@ -96,18 +97,22 @@ onMounted (() => {
                 <div class="row">
                     <div v-for="(cake, i) in cakeFiltered" :key="i" class="col-6 col-md-4 col-lg-3 d-flex mt-4">
                     <div class="card flex-fill rounded-4 shadow p-3">
-                        <img :src="cake.foto_kue" alt="img-cake" class="card-img-top">
-                        <div class="card-body">
-                            <h5 class="mt-3">{{ cake.nama_kue }}</h5>
-                            <h3 class="fw-bold">{{ cake.harga }}</h3>
-                            <div class="text-end my-2">
-                                <NuxtLink 
-                                :to="cake.stok ? `/catalogue/${cake.id}` : '#'"
-                                class="btn mt-3 rounded-5"
-                                :class="{ disabled: !cake.stok }"
-                                @click="checkStock(product)">
-                                {{ cake.stok ? 'Beli' : 'Habis' }}
-                                </NuxtLink>
+                          <div v-if="cake">
+                            <img :src="cake.foto_kue" alt="img-cake" class="card-img-top">
+                            <div class="card-body">
+                                <h5 class="mt-3">{{ cake.nama_kue }}</h5>
+                                <h3 class="fw-bold">{{ cake.harga }}</h3>
+                                <div class="text-end my-2">
+                                    <!-- <NuxtLink :to="`/catalogue/${cake.id}`">Lihat Detail</NuxtLink> -->
+
+                                    <NuxtLink 
+                                    :to="cake.stok ? `/catalogue/${cake.id_kue}` : '#'"
+                                    class="btn mt-3 rounded-5"
+                                    :class="{ disabled: !cake.stok }"
+                                    @click="checkStock(cake)">
+                                    {{ cake.stok ? 'Beli' : 'Habis' }}
+                                    </NuxtLink>
+                                </div>
                             </div>
                         </div>
                     </div>

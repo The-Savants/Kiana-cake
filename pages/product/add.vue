@@ -4,7 +4,7 @@ const categories = ref([])
 const kategori = ref()
 const files = ref()
 const sizes = ref([])
-const url_img = `https://qxiqnifqwadzkzpshvqq.supabase.co/storage/v1/object/public/cake/`
+const url_img = `https://nhfvcfyqigrulgwhxyyw.supabase.co/storage/v1/object/public/cake/`
 const form = ref({
     nama_kue: "",
     id_kategori: "",

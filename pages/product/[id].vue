@@ -21,7 +21,7 @@ const getCakeId = async () => {
             *
         )
     `)
-        .eq('id', cakeId).single()
+        .eq('id_kue', cakeId).single()
     if (data) {
         if (data.foto_kue) data.foto_kuePath = data.foto_kue.substr(data.foto_kue.indexOf(data.kategori.nama.replace(' ', '-').toLowerCase())) 
         cake.value = data
@@ -66,7 +66,7 @@ async function updateCake() {
             harga: cake.value.harga,
             stok: cake.value.stok,
             foto_kue: url
-        }).eq('id', cakeId)
+        }).eq('id_kue', cakeId)
         if (error) throw error
         navigateTo('/product')
     } catch (error) {

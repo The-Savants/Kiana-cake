@@ -1,14 +1,20 @@
 <script setup>
+definePageMeta({
+  key: (route) => route.fullPath,
+})
+
 const supabase = useSupabaseClient()
-const {id} = useRoute().params
-const cake = ref('')
+// const {id} = useRoute().params
+const route = useRoute()
+const id = computed(() => Number(route.params.id))
+const cake = ref(null)
 const categories = ref([])
 const sizes = ref([])
 const form = ref({
     nama_pembeli: "",
     alamat_lengkap: "",
     no_hp: "",
-    id_kue: id,
+    id_kue: null,
 })
 
 
@@ -18,13 +24,35 @@ const addData = async () => {
   console.log(error)
 }
 
-const getCakeId = async () => {
-  const { data, error } = await supabase.from('produk').select(`*, kategori(*), ukuran(*)`)
-  .eq('id', id)
+watchEffect(async () => {
+  console.log('🔥 FULL PARAMS:', route.params)
+  const rawId = route.params.id
+  if (!rawId) {
+    console.error('❌ ID belum tersedia:', rawId)
+    return
+  }
+
+  const parsedId = Number(rawId)
+  if (isNaN(parsedId)) {
+    console.error('❌ ID bukan angka valid:', rawId)
+    return
+  }
+
+  const { data, error } = await supabase.from('produk').select(`
+    *,
+    kategori(*),
+    ukuran(*)
+  `).eq('id_kue', parsedId).single()
+
+  console.log('DATA:', data)
+  console.log('ERROR:', error)
+
   if (data) {
-    cake.value = data[0]
-      }
-}
+    cake.value = data
+    form.value.id_kue = data.id_kue
+  }
+})
+
 
 const getCategory = async () => {
     const { data, error } = await supabase.from('kategori').select('*')
@@ -36,11 +64,26 @@ const getSize = async () => {
     if (data) sizes.value = data
 }
 
+// watchEffect(() => {
+//   if (!route.params.id) return
+
+//   const idVal = Number(route.params.id)
+//   if (isNaN(idVal)) {
+//     console.error("❌ ID tidak valid:", route.params.id)
+//     return
+//   }
+
+//   console.log("✅ ID berhasil:", idVal)
+//   // getCakeId(idVal) atau panggil function-mu di sini
+// })
+
+
 onMounted (() => {
-    getCakeId()
+    // getCakeId()
     getCategory()
     getSize()
 })
+
 
 </script>
 
@@ -48,8 +91,8 @@ onMounted (() => {
     <div class="container-fluid pt-4 mb-5">
 
         <div class="row">
-            <div class="col-md-1 mt-2">
-                <nuxt-link :to="`/catalogue/${cake.id}`" style="text-decoration: none; color: black;">
+            <div v-if="cake" class="col-md-1 mt-2">
+                <nuxt-link :to="`/catalogue/${cake.id_kue}`" style="text-decoration: none; color: black;">
                     <i class="bi bi-arrow-left-circle fs-2"></i>
                 </nuxt-link>
             </div>
@@ -63,7 +106,7 @@ onMounted (() => {
                 <div class="card add rounded-4 shadow">
                     <div class="card-body">
                         <div class="row p-3">
-                            <div class="col-4">
+                            <div v-if="cake" class="col-4">
                                 <img :src="cake?.foto_kue" alt="img-cake" class="img-cake rounded-4 mt-3">
                             </div>
                             <div class="col-7">
@@ -116,7 +159,7 @@ h2, h6, input, label, textarea, li, .btn {
 }
 
 input, textarea {
-    width: 360px;
+    width: 320px;
 }
 
 i {
@@ -125,7 +168,7 @@ i {
 
 .btn{
     width: 100px;
-    margin-left: 135px;
+    margin-left: 115px;
     color: white;
     background-color: #c6ac7b;
 }

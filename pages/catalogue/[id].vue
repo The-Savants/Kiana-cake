@@ -1,16 +1,28 @@
 <script setup>
 const supabase = useSupabaseClient()
 const route = useRoute()
-const cake = ref({})
+const cake = ref(null)
 const categories = ref([])
 const sizes = ref([])
 
 
 const getCakeId = async () => {
-  const { data, error } = await supabase.from('produk').select(`*, kategori(*), ukuran(*)`)
-  .eq('id', route.params.id)
+    const id = Number(route.params.id)
+    if (isNaN(id)) {
+        console.error('Invalid ID:', route.params.id)
+        return
+  }  const { data, error } = await supabase.from('produk').select(`
+  *,
+  kategori(*),
+  ukuran(*)
+`)
+  .eq('id_kue', id).single()
+
+    console.log('DATA:', data)
+    console.log('ERROR:', error)
+
   if (data) {
-    cake.value = data[0]
+    cake.value = data
       }
 }
 
@@ -45,37 +57,39 @@ onMounted (() => {
             </div>
         </div>
 
-        <div class="row mt-5 justify-content-center">
-            <div class="col-5 col-lg-3 d-flex ">
-                <div class="card card-img flex-fill cake rounded-4 shadow">
-                    <div class="card-body text-center p-3">
-                        <img :src="cake.foto_kue" alt="img-cake" class="card-img-top rounded-3">
+        <div v-if="cake">
+            <div class="row mt-5 justify-content-center">
+                <div class="col-5 col-lg-3 d-flex ">
+                    <div class="card card-img flex-fill cake rounded-4 shadow">
+                        <div class="card-body text-center p-3">
+                            <img :src="cake.foto_kue" alt="img-cake" class="card-img-top rounded-3">
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-7 col-lg-5">
-                <div class="card mb-5 rounded-4">
-                    <div class="card-body">
-                        <ul>
-                          <li class="list-group-item name fw-semibold">{{ cake?.nama_kue }}</li>
-                          <li class="list-group-item">{{ cake?.kategori?.nama }}</li>
-                          <li class="list-group-item">Ukuran {{ cake?.ukuran?.nama }}</li>
-                          <li class="list-group-item" v-if="cake.id_kategori !== 3 && cake.id_kategori !== 4">Free lilin</li>
-                          <li class="list-group-item price fw-bold">{{ cake?.harga }}</li>
-                        </ul>
-                        <div class="row button mt-4">
-                            <div class="col-md-6">
-                                <nuxt-link href="https://wa.me/6281224703915" style="text-decoration: none; color: black;" target="_blank">
-                                    <button class="btn pesan rounded-5">Pesan via Whatsapp</button>
-                                </nuxt-link>
+                <div class="col-7 col-lg-5">
+                    <div class="card mb-5 rounded-4">
+                        <div class="card-body">
+                            <ul>
+                            <li class="list-group-item name fw-semibold">{{ cake?.nama_kue }}</li>
+                            <li class="list-group-item">{{ cake?.kategori?.nama }}</li>
+                            <li class="list-group-item">Ukuran {{ cake?.ukuran?.nama }}</li>
+                            <li class="list-group-item" v-if="cake.id_kategori !== 3 && cake.id_kategori !== 4">Free lilin</li>
+                            <li class="list-group-item price fw-bold">{{ cake?.harga }}</li>
+                            </ul>
+                            <div class="row button mt-4">
+                                <div class="col-md-6">
+                                    <nuxt-link href="https://wa.me/6281224703915" style="text-decoration: none; color: black;" target="_blank">
+                                        <button class="btn pesan rounded-5">Pesan via Whatsapp</button>
+                                    </nuxt-link>
+                                </div>
+                                <div v-if="cake && cake.id_kue" class="col-md-6">
+                                    <nuxt-link :to="`/form/${cake.id_kue}`">
+                                        <button class="btn btn-pesan rounded-5">Pesan sekarang</button>
+                                    </nuxt-link>
+                                </div>
                             </div>
-                            <div class="col-md-6">
-                                <nuxt-link :to="`/form/${cake.id}`">
-                                    <button class="btn btn-pesan rounded-5">Pesan sekarang</button>
-                                </nuxt-link>
-                            </div>
+                                
                         </div>
-                            
                     </div>
                 </div>
             </div>

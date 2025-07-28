@@ -8,7 +8,7 @@
                 </nuxt-link>
             </div>
             <div class="col-lg-10 text-center">
-                <h3 class="mt-3">Costum Your Cake</h3>
+                <h3 class="mt-3">Custom Your Cake</h3>
             </div>
         </div>
 

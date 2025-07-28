@@ -2,7 +2,6 @@
 const supabase = useSupabaseClient()
 const selectCustomers = ref([])
 const cakes = ref([])
-const idOrder = ref()
 const customers = ref([])
 
 function toggleDelete(customer) {
@@ -14,10 +13,15 @@ async function getCustomer() {
     if(data) customers.value = data
 }
 
-async function markAsCompleted () {
-    console.log(idOrder.value)
-    const { data, error } = await supabase.from("customer").update({status: true}).eq("id", idOrder.value)
-    if (data) getCustomer()
+async function markAsCompleted (id) {
+    console.log('ID yang dikirim:', id)
+    const { data, error } = await supabase.from("customer").update({status: true}).eq("id", id)
+
+    if (!error) {
+        getCustomer()
+    } else {
+        console.error(error)
+    }
 }
 
 const getCake = async () => {
@@ -88,8 +92,11 @@ definePageMeta({
                             </div>
                         </div>
                         <div class="text-center mt-3 d-flex justify-content-around">
-                                <button class="btn complited rounded-5" data-bs-toggle="modal" data-bs-target="#complitedModal" @click="() => idOrder=customer.id" :disabled="customer.status">Tandai selesai</button>
-                                <button class="btn btn-danger rounded-5" data-bs-toggle="modal" data-bs-target="#deleteModal" @click="toggleDelete(customer)">Batalkan pesanan</button>
+                            <button class="btn complited rounded-5" data-bs-toggle="modal" data-bs-target="#complitedModal" @click="toggleDelete(customer)" :disabled="customer.status">
+                              {{ customer.status ? "Pesanan Selesai" : "Tandai Selesai" }}
+                            </button>                               
+                             <button class="btn btn-danger rounded-5" data-bs-toggle="modal" data-bs-target="#deleteModal" v-if="!customer.status" @click="toggleDelete(customer)">Batalkan pesanan</button>
+                             <!-- <small v-else class="text-muted">Pesanan sudah selesai</small> -->
                         </div>
                     </div>
                 </div>
@@ -128,8 +135,15 @@ definePageMeta({
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn rounded-5" data-bs-dismiss="modal">Batal</button>
-                    <button type="button" class="btn btn-light rounded-5" @click="markAsCompleted" data-bs-dismiss="modal">Ya</button>
-                </div> 
+                        <button
+                        type="button"
+                        class="btn btn-light rounded-5"
+                        @click="markAsCompleted(selectCustomers.id)"
+                        data-bs-dismiss="modal"
+                        >
+                        Ya
+                        </button>                
+                    </div> 
                 </div>
             </div>
         </div>

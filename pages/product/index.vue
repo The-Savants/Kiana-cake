@@ -31,7 +31,7 @@ const cakeFiltered = computed(() => {
 
 const deleteCake = async (id) => {
     console.log(id)
-    const { error } = await supabase.from('produk').delete().eq('id', id)
+    const { error } = await supabase.from('produk').delete().eq('id_kue', id)
     if (error) throw error
     else
         refresh()
@@ -113,7 +113,7 @@ definePageMeta({
                                     <td>{{ cake.kategori?.nama }}</td>
                                     <td>{{ cake.ukuran?.nama }}</td>
                                     <td>{{ cake.harga }}</td>
-                                    <td><nuxt-link :to="`/product/${cake.id}`" style="color: black;">
+                                    <td><nuxt-link :to="`/product/${cake.id_kue}`" style="color: black;">
                                         <i class="bi bi-pencil fs-4 fw-bold edit"></i>
                                     </nuxt-link></td>
                                     <td><i class="bi bi-trash3 fs-4 fw-bold delete" data-bs-toggle="modal"
@@ -141,7 +141,7 @@ definePageMeta({
                     <div class="modal-footer">
                         <button type="button" class="btn edit rounded-5" data-bs-dismiss="modal">Batal</button>
                         <button type="button" class="btn delete rounded-5" data-bs-dismiss="modal"
-                            @click="deleteCake(selectCake.id)">Hapus</button>
+                            @click="deleteCake(selectCake.id_kue)">Hapus</button>
                     </div>
                 </div>
             </div>
