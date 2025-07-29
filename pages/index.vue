@@ -70,7 +70,7 @@ onMounted (() => {
                             <h3 class="fw-bold">{{ produk.harga }}</h3>
                             <div class="text-end my-2">
                                 <NuxtLink 
-                                :to="produk.stok ? `/catalogue/${produk.id}` : '#'"
+                                :to="produk.stok ? `/catalogue/${produk.id_kue}` : '#'"
                                 class="btn mt-3 rounded-5"
                                 :class="{ disabled: !produk.stok }"
                                 @click="checkStock(product)">
@@ -103,7 +103,7 @@ onMounted (() => {
                             <h5 class="mt-3">{{ cake.nama_kue }}</h5>
                             <h3 class="fw-bold">{{ cake.harga }}</h3>
                             <div class="text-end my-2">
-                                <nuxt-link :to="`/catalogue/${cake.id}`">
+                                <nuxt-link :to="`/catalogue/${cake.id_kue}`">
                                     <button class="btn mt-3 rounded-5">Beli</button>
                                 </nuxt-link>
                             </div>
@@ -149,7 +149,7 @@ onMounted (() => {
         <div class="p-5">
             <h2>About</h2>
         </div>
-        <div class="row justify-content-center">
+        <div class="row justify-content-center mb-5">
             <div class="col-lg-5 col-md-5">
                 <div class="tittle">
                     <h3>Kiana Cake and Cookies</h3>
@@ -166,45 +166,7 @@ onMounted (() => {
                     </div>
                 </div>
             </div>  
-        </div>
-
-        <!--Footer-->
-        <div class="row footer p-4 mt-5">
-            <div class="col-lg-1">
-                <img src="../assets/img/logo-rb.png" alt="img-logo" class="logo">
-            </div>
-            <div class="col-lg-3">
-                <h3>Kiana Cake and Cookies</h3>
-                <h5>Cake for every moment</h5>
-            </div>
-            <div class="col-lg-4">
-                <h4 class="address">Alamat</h4>
-                <hr>
-                <div class="d-flex align-items-center">
-                        <i class="bi bi-geo-alt-fill"></i>
-                        <h6>Jl. H. Oce Sk, Sukanagara, Purbaratu, Kota Tasikmalaya</h6>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <h4>Social Media</h4>
-                <hr>
-                <div class="socialmedia mt">
-                    <nuxt-link href="https://wa.me/6281224703915" style="text-decoration: none; color: black;" target="_blank">
-                        <i class="bi bi-whatsapp"></i>
-                    </nuxt-link>
-                    <nuxt-link href="https://www.facebook.com/kiana.arrabella.9" style="text-decoration: none; color: black;" target="_blank">
-                        <i class="bi bi-facebook"></i>
-                    </nuxt-link>
-                    <nuxt-link href="https://www.instagram.com/kianacakeandcookies/profilecard/?igsh=dGI2Z3kzNnQ1dXl4" style="text-decoration: none; color: black;" target="_blank">
-                        <i class="bi bi-instagram"></i>  
-                    </nuxt-link>                             
-                    <div class="d-flex align-items-center mt-2">
-                        <i class="bi bi-envelope-at"></i>
-                        <span><h6>kianacakeandcookies@gmail.com</h6></span>
-                    </div>
-                </div>                  
-            </div>
-        </div>
+        </div>        
 
         <!--whatsapp-->
             <nuxt-link class="btn-wa fixed-bottom text-center" href="https://wa.me/6281224703915" style="text-decoration: none; color: white;" target="_blank">
@@ -301,63 +263,6 @@ h3, h4, h5, h6, .btn  {
     background-color: white;
     color: black;
     border: 3px solid #C6AC7B;
-}
-
-.footer {
-    border: 2px solid #C6AC7B;
-    background-color: #F0EDDC;
-}
-
-.address {
-    margin-left: 70px;
-}
-
-.footer i {
-    font-size: 25px;
-    margin-left: 20px;
-}
-
-.footer h6 {
-    margin-top: 15px;
-    margin-left: 10px;
-}
-
-.footer h3 {
-  font-family: "Berkshire Swash", serif;
-  font-weight: 400;
-  font-style: normal;
-}
-
-.footer h5 {
-  font-family: "Charmonman", cursive;
-  font-weight: 400;
-  font-style: normal;
-}
-
-.img-logo {
-    width: 170px;
-    margin: auto;
-    margin-top: 10px;
-}
-
-.footer hr {
-    color: #C6AC7B;
-}
-
-.card {
-    border: 1px solid #C6AC7B;
-}
-
-.footer img {
-    width: 100px;
-}
-
-.footer h3, .footer h5 {
-    margin-left: 20px;
-}
-
-.footer span {
-    margin-left: 15px;
 }
 
 .seemore {

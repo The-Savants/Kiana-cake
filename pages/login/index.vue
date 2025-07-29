@@ -5,7 +5,7 @@
             <h2>Silahkan login, <b>Admin</b></h2>
         </div>
 
-        <div class="row justify-content-center">
+        <div class="row justify-content-center login">
             <div class="col-8 col-md-7 col-lg-4">
                 <div class="card rounded-4 shadow">
                     <div class="card-body m-3">
@@ -31,6 +31,9 @@
 </template>
 
 <script setup>
+definePageMeta({
+    layout: 'login'
+})
 
 const supabase = useSupabaseClient()
 const email = ref ("")
@@ -50,9 +53,6 @@ async function SignIn() {
   }
 }
 
-definePageMeta ({
-    layout: 'login'
-})
 
 </script>
 
@@ -62,6 +62,10 @@ definePageMeta ({
 .container-fluid {
     background-color: #D8C7A6;
     height: 100vh;
+}
+
+.login {
+    margin: 0;
 }
 
 

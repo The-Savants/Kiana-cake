@@ -53,6 +53,11 @@ const setActive = (tab) => {
     margin-right: 2rem;
 }
 
+.container-fluid {
+    width: 100%;
+    padding: 0%;
+}
+
 h1 {
     margin-top: 1rem;
     margin-left: 1.5rem;

@@ -83,7 +83,7 @@ onMounted (() => {
         </div>
 
         <!--Search-->
-        <div class="row mt-5 d-flex justify-content-center">
+        <div class="row mt-5 d-flex justify-content-center search">
             <div class="col-10 col-md-7">
                 <form @submit.prevent="getCake" class="input-group flex-nowrap">
                     <input v-model="keyword" type="text" class="form-control shadow rounded-5" placeholder="Cari nama atau harga kue" aria-label="Search"
@@ -136,6 +136,10 @@ h3, h5, h6, input, .btn {
     font-family: "Poppins", sans-serif;
 }
 
+.container-fluid {
+    width: 100%;
+}
+
 i {
     margin-left: 50px;
 }
@@ -148,6 +152,11 @@ input {
 
 .form-control {
   border-right: none;
+  margin: 0%;
+}
+
+.search {
+    margin: 0;
 }
 
 .custom {
@@ -178,6 +187,10 @@ input {
 
 .cursor {
     cursor: pointer;
+}
+
+.catalogue {
+    padding: 0%;
 }
 
 @media only screen and (min-width: 600px) and (max-width: 890px) {

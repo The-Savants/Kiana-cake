@@ -3,5 +3,6 @@
         <NavAdmin />
 
         <slot  />
+
     </div>
 </template>

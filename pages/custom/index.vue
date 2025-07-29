@@ -1,5 +1,5 @@
 <template>
-    <div class="container-fluid pt-4 mb-5">
+    <div class="container-fluid pt-4">
 
         <div class="row">
             <div class="col-lg-1 mt-2">
@@ -63,6 +63,8 @@ i {
 }
 
 .container-fluid {
+    width: 100%;
+    height: 100vh;
     background-color: #F0EDDC;
 }
 
